@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.unpluguserservice.common.ApiResponse;
 import org.example.unpluguserservice.dto.UserRequestDto;
 import org.example.unpluguserservice.dto.UserResponseDto;
+import org.example.unpluguserservice.entity.User;
+import org.example.unpluguserservice.repository.UserRepository;
 import org.example.unpluguserservice.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.slf4j.Logger;
@@ -15,10 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/signup")
@@ -38,4 +41,13 @@ public class UserController {
         userService.checkUsableNickname(nickname);
         return new ApiResponse<>(true, "사용 가능한 닉네임입니다.", nickname);
     }
+
+    // 테스트용 API
+    @GetMapping("/me")
+    public UserInfo me(@RequestHeader(value = "X-Auth-Username", required = false) String username) {
+        if (username == null) throw new IllegalArgumentException("username required");
+        User user = userRepository.findByUsername(username).orElseThrow();
+        return new UserInfo(user.getUserId(), user.getUsername());
+    }
+    public record UserInfo(Long id, String username) {}
 }
