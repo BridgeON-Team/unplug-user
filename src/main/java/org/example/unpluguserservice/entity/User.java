@@ -20,7 +20,7 @@ public class User {
     private Long userId;
 
     // 유저 아이디
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "username", nullable = false)
     private String username;
 
     // 유저 이름
