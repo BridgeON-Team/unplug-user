@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
+    private final UserService userService;
+
     private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+
 
     // 테스트용 API
     @GetMapping("/me")
