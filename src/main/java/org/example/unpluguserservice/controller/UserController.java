@@ -19,28 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    @PostMapping("/signup")
-    public ApiResponse<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto request){
-        UserResponseDto response = userService.createUser(request, passwordEncoder);
-        return new ApiResponse<>(true, "회원가입이 정상적으로 완료되었습니다.", response);
-    }
-
-    @GetMapping("/check/username")
-    public ApiResponse<String> checkUsername(@RequestParam("username") String username){
-        userService.checkUsableUsername(username);
-        return new ApiResponse<>(true, "사용 가능한 아이디입니다.", username);
-    }
-
-    @GetMapping("/check/nickname")
-    public ApiResponse<String> checkNickname(@RequestParam("nickname") String nickname){
-        userService.checkUsableNickname(nickname);
-        return new ApiResponse<>(true, "사용 가능한 닉네임입니다.", nickname);
-    }
 
     // 테스트용 API
     @GetMapping("/me")
