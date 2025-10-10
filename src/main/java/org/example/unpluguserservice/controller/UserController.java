@@ -20,13 +20,13 @@ public class UserController {
 //    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/info")
-    public ApiResponse<UserResponseDto> userInfo(@RequestHeader(value = "X-Auth-Username", required = false) String username){
+    public ApiResponse<UserResponseDto> userInfo(@RequestHeader(value = "X-Auth-Username") String username){
         UserResponseDto response = userService.getUser(username);
         return new ApiResponse<>(true, "정상적으로 조회했습니다.", response);
     }
 
     @DeleteMapping("/withdraw")
-    public ApiResponse<?> deleteUser(@RequestHeader(value = "X-Auth-Username", required = false) String username){
+    public ApiResponse<?> deleteUser(@RequestHeader(value = "X-Auth-Username") String username){
         userService.deleteUser(username);
         return new ApiResponse<>(true, "정상적으로 탈퇴되었습니다.");
     }
