@@ -31,6 +31,7 @@ public class UserController {
         return new ApiResponse<>(true, "정상적으로 탈퇴되었습니다.");
     }
 
+
     // 테스트용 API
 //    @GetMapping("/me")
 //    public UserInfo me(@RequestHeader(value = "X-Auth-Username", required = false) String username) {
