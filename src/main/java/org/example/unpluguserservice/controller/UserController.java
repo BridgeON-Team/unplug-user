@@ -1,5 +1,6 @@
 package org.example.unpluguserservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.unpluguserservice.common.ApiResponse;
@@ -20,13 +21,15 @@ public class UserController {
 //    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/info")
-    public ApiResponse<UserResponseDto> userInfo(@RequestHeader(value = "X-Auth-Username", required = false) String username){
+    @Operation(summary = "마이페이지 - 유저 정보 불러오기")
+    public ApiResponse<UserResponseDto> userInfo(@RequestHeader(value = "X-Auth-Username") String username){
         UserResponseDto response = userService.getUser(username);
         return new ApiResponse<>(true, "정상적으로 조회했습니다.", response);
     }
 
     @DeleteMapping("/withdraw")
-    public ApiResponse<?> deleteUser(@RequestHeader(value = "X-Auth-Username", required = false) String username){
+    @Operation(summary = "마이페이지 - 회원 탈퇴")
+    public ApiResponse<?> deleteUser(@RequestHeader(value = "X-Auth-Username") String username){
         userService.deleteUser(username);
         return new ApiResponse<>(true, "정상적으로 탈퇴되었습니다.");
     }
